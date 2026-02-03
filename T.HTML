@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>STN Tech Solutions</title>
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --line:rgba(15, 23, 42, .10);
+      --shadow: 0 18px 50px rgba(2, 6, 23, .10);
+      --radius: 18px;
+      --max: 1100px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 70% 0%, rgba(2, 6, 23, .06), transparent 60%),
+        radial-gradient(900px 500px at 20% 20%, rgba(2, 6, 23, .04), transparent 60%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(var(--max), calc(100% - 32px)); margin-inline:auto; }
+
+    /* ===== Top bar ===== */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background: rgba(255,255,255,.80);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 0;
+      gap: 12px;
+    }
+
+    /* Brand in header (logo + 16px title) */
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 180px;
+    }
+
+    .brand img{
+      width: 56px;
+      height: auto;
+      display:block;
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height: 1.05;
+    }
+
+    .brand-text strong{
+      font-weight: 850;
+      letter-spacing: .4px;
+      font-size: 18px;
+    }
+
+    .brand-title{
+      margin-top: 4px;
+      font-size: 16px;          /* ✅ ביקשת 16px */
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      text-transform: uppercase;
+    }
+
+    .nav{ display:flex; align-items:center; gap: 18px; }
+
+    .nav a{
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 14px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      transition: background .15s ease, color .15s ease;
+    }
+    .nav a:hover{ background: rgba(2,6,23,.06); color: var(--text); }
+
+    .cta{
+      display:flex; align-items:center; gap: 10px;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(2, 6, 23, .04);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight: 750;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{ background: rgba(2, 6, 23, .06); border-color: rgba(15,23,42,.18); }
+    .btn:active{ transform: translateY(1px); }
+
+    /* Hamburger (mobile) */
+    .hamburger{
+      display:none;
+      border:1px solid var(--line);
+      background: rgba(2,6,23,.04);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      line-height:0;
+      color: var(--text);
+    }
+    .hamburger svg{ width:22px; height:22px; }
+
+    .mobile-menu{
+      display:none;
+      border-top: 1px solid var(--line);
+      padding: 10px 0 16px;
+    }
+    .mobile-menu a{
+      display:block;
+      padding: 12px 10px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .mobile-menu a:hover{ background: rgba(2,6,23,.06); color: var(--text); }
+
+    /* ===== Hero ===== */
+    .hero{
+    
+      display:flex;
+      align-items:center;
+      padding: 34px 0 46px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items:center;
+    }
+
+    .hero-card{
+      background: rgba(255,255,255,.75);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .logo-stage{
+      min-height: 420px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 34px;
+      position:relative;
+      isolation:isolate;
+    }
+
+    .logo-stage::before{
+      content:"";
+      position:absolute;
+      inset:-60px;
+      background: radial-gradient(450px 250px at 50% 50%, rgba(2,6,23,.06), transparent 60%);
+      z-index:-1;
+    }
+
+    .logo-wrap{
+      width:min(520px, 100%);
+      text-align:center;
+    }
+
+    .logo-hero{
+     
+      width: 100%;
+      height:auto;
+      display:block;
+      margin-inline:auto;
+    }
+
+    .logo-caption{
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+    }
+
+    .side .panel{
+      padding: 18px 18px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .side h1{
+      margin: 0 0 8px;
+      font-size: clamp(22px, 3vw, 34px);
+      letter-spacing: .2px;
+    }
+
+    .side p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .feature{
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(2,6,23,.03);
+      border: 1px solid rgba(15,23,42,.10);
+    }
+
+    .feature strong{ display:block; font-size: 14px; margin-bottom: 4px; }
+    .feature span{ color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    .side-actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    /* ===== Sections ===== */
+    section{ 
+      padding: 44px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-title{
+      display:flex; align-items:baseline; justify-content:space-between; gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-title h2{ margin:0; font-size: 18px; }
+    .section-title small{ color: var(--muted); }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card{
+      background: rgba(255,255,255,.75);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      min-height: 120px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3{ margin:0 0 8px; font-size: 15px; }
+    .card p{ margin:0; color: var(--muted); line-height: 1.8; font-size: 13px; }
+
+    footer{
+      padding: 22px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      background: rgba(255,255,255,.75);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .logo-stage{ min-height: 360px; }
+      .cards{ grid-template-columns: 1fr; }
+      .brand{ min-width: auto; }
+    }
+
+    @media (max-width: 760px){
+      .nav{ display:none; }
+      .hamburger{ display:inline-flex; align-items:center; justify-content:center; }
+      .features{ grid-template-columns: 1fr; }
+      .brand img{ width: 48px; }
+      .brand-text strong{ font-size: 16px; }
+      .brand-title{ font-size: 16px; }
+    }
+
+.logo-box{
+  position: relative;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 48px 32px;
+  text-align: center;
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.06),
+    inset 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* רקע סקיצה טכנולוגית */
+.logo-box::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      rgba(0,0,0,0.035),
+      rgba(0,0,0,0.035) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+  opacity: 0.5;
+  z-index: 0;
+}
+
+/* שכבת עומק רכה */
+.logo-box::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0,0,0,0.04),
+      transparent 60%
+    );
+  z-index: 0;
+}
+
+/* התוכן מעל הרקע */
+.logo-box > *{
+  position: relative;
+  z-index: 1;
+}
+
+.logo-img{
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.logo-sub{
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+}
+.logo-frame{
+  position: relative;
+  display: inline-flex;
+  padding: 56px;
+  border-radius: 28px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(59,130,246,0.18),
+      rgba(59,130,246,0.06) 60%,
+      #f8fbff
+    );
+
+  box-shadow:
+    0 20px 40px rgba(15,23,42,0.08),
+    inset 0 0 0 1px rgba(59,130,246,0.15);
+}
+
+/* סקיצה קווית עדינה */
+.logo-frame::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(59,130,246,0.18),
+      rgba(59,130,246,0.18) 1px,
+      transparent 1px,
+      transparent 20px
+    );
+  opacity: 0.35;
+  z-index:0;
+}
+
+/* הילה */
+.logo-frame::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(59,130,246,0.15),
+      transparent 65%
+    );
+  z-index:0;
+}
+
+.logo-frame img{
+  position: relative;
+  z-index: 1;
+}
+.image-container {
+    
+    background-image: url('https://img1.wsimg.com/isteam/getty/2169040419'); /* כאן יש לשים את הנתיב של התמונה שלך */
+    background-size: cover; /* התמונה תתפרס על כל הריבוע */
+    background-position: center; /* התמונה תימצא במרכז */
+    background-repeat: no-repeat; /* לא תחזור על עצמה */
+}
+
+  </style>
+	
+</head>
+
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+
+        <!-- ✅ Header brand: logo + 16px title -->
+        <a class="brand" href="#top" aria-label="STN Home">
+          <img
+            src="https://raw.githubusercontent.com/liorg/images/main/STN_darkgray_transparent_256px.png"
+            alt="STN logo"
+          />
+          <div class="brand-text">
+            <strong>STN</strong>
+            <div class="brand-title">Tech Solutions</div>
+          </div>
+        </a>
+
+        <nav class="nav" aria-label="Business menu">
+          <a href="#services">שירותים</a>
+          <a href="#solutions">פתרונות</a>
+          <a href="#projects">פרויקטים</a>
+          <a href="#about">אודות</a>
+          <a href="#contact">צור קשר</a>
+        </nav>
+
+        <div class="cta">
+          <button class="btn" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'});">
+            בקשת הצעת מחיר
+          </button>
+
+          <button class="hamburger" id="hamburger" aria-label="פתח תפריט" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu" aria-label="Mobile menu">
+        <a href="#services">שירותים</a>
+        <a href="#solutions">פתרונות</a>
+        <a href="#projects">פרויקטים</a>
+        <a href="#about">אודות</a>
+        <a href="#contact">צור קשר</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main class="hero" id="top">
+    <div class="image-container  container">
+      <div class="hero-grid ">
+
+        <!-- ✅ Hero card with bigger logo + caption -->
+        <div class=" hero-card">
+          <div class="logo-stage">
+            <div class="logo-wrap">
+              <img
+                src="https://raw.githubusercontent.com/liorg/images/main/STN_darkgray_transparent_1024px.png"
+                alt="STN logo"
+                class="logo-hero"
+              />
+              <div class="logo-caption">
+                פתרונות טכנולוגיים לעסקים: אוטומציה, ענן, אבטחה ופיתוח מערכות.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business panel -->
+        <aside class="side">
+          <div class="panel">
+            <h1>מפתחים פתרונות שמפשטים לך את העבודה</h1>
+            <p>
+              דף בית נקי ומהיר, מותאם לכל מסך, עם תפריט עסקי ברור וקריאות לפעולה.
+              אפשר להמשיך מכאן לעמודי שירותים, טפסי לידים, וגלריית פרויקטים.
+            </p>
+
+            <div class="side-actions">
+              <button class="btn" onclick="document.querySelector('#services').scrollIntoView({behavior:'smooth'});">
+                לראות שירותים
+              </button>
+              <button class="btn" onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'});">
+                לראות פרויקטים
+              </button>
+            </div>
+
+            <div class="features" aria-label="Highlights">
+              <div class="feature">
+                <strong>Responsive</strong>
+                <span>נראה מצוין במובייל ובדסקטופ</span>
+              </div>
+              <div class="feature">
+                <strong>מהיר וקל</strong>
+                <span>בלי ספריות, רק HTML/CSS/JS</span>
+              </div>
+              <div class="feature">
+                <strong>תפריט עסקי</strong>
+                <span>כולל המבורגר במובייל</span>
+              </div>
+              <div class="feature">
+                <strong>קריאות לפעולה</strong>
+                <span>כפתורים לטופס/הצעת מחיר</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Sections -->
+  <section id="services">
+    <div class="container">
+      <div class="section-title">
+        <h2>שירותים</h2>
+        <small>דוגמא לתוכן — אפשר לשנות</small>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>פיתוח מערכות</h3>
+          <p>Backend / API, אינטגרציות, בוטים ותהליכי אוטומציה.</p>
+        </div>
+        <div class="card">
+          <h3>Cloud & DevOps</h3>
+          <p>פריסה, CI/CD, ניטור, סקיילינג ותשתיות מסודרות.</p>
+        </div>
+        <div class="card">
+          <h3>אבטחה ותצורה</h3>
+          <p>הקשחה, הרשאות, לוגים, מדיניות ותהליכי עבודה.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solutions">
+    <div class="container">
+      <div class="section-title">
+        <h2>פתרונות</h2>
+        <small>מיקוד עסקי ברור</small>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>אוטומציה לעסקים</h3>
+          <p>חוסכים זמן: תהליכי עבודה, טפסים, חיבורים בין מערכות.</p>
+        </div>
+        <div class="card">
+          <h3>ניהול מידע</h3>
+          <p>דשבורדים, דוחות, תהליכי ETL ושיפור איכות נתונים.</p>
+        </div>
+        <div class="card">
+          <h3>מערכות תקשורת</h3>
+          <p>אינטגרציות WhatsApp / CRM / מערכות שירות לקוחות.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="section-title">
+        <h2>פרויקטים</h2>
+        <small>תוכל להחליף לכרטיסיות עם תמונות</small>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Project A</h3>
+          <p>תיאור קצר: מה נבנה, מה הבעיה, ומה התוצאה.</p>
+        </div>
+        <div class="card">
+          <h3>Project B</h3>
+          <p>תיאור קצר: זמן אספקה, שיפור תהליך, חיסכון בעלויות.</p>
+        </div>
+        <div class="card">
+          <h3>Project C</h3>
+          <p>תיאור קצר: אינטגרציות, אבטחה, ניטור וסקיילינג.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="section-title">
+        <h2>אודות</h2>
+        <small>שני משפטים חזקים על העסק</small>
+      </div>
+
+      <div class="card">
+        <h3>STN Tech Solutions</h3>
+        <p>
+          אנחנו בונים פתרונות טכנולוגיים שמותאמים לעסק: ברור, מדיד, וניתן להרחבה.
+          עובדים בשקיפות, עם תכנון מסודר ותיעוד.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>צור קשר</h2>
+        <small>כאן מחברים לטופס או וואטסאפ</small>
+      </div>
+
+      <div class="card">
+        <h3>השאירו פרטים</h3>
+        <p style="margin-bottom:12px;">דוגמה לטופס (ללא שליחה לשרת):</p>
+
+        <form onsubmit="event.preventDefault(); alert('נשלח! (דמו בלבד)');"
+              style="display:grid; gap:10px; max-width:520px;">
+          <input required placeholder="שם מלא"
+                 style="padding:12px;border-radius:14px;border:1px solid rgba(15,23,42,.16);background:rgba(2,6,23,.03);color:var(--text);" />
+          <input required placeholder="טלפון"
+                 style="padding:12px;border-radius:14px;border:1px solid rgba(15,23,42,.16);background:rgba(2,6,23,.03);color:var(--text);" />
+          <input placeholder="אימייל"
+                 style="padding:12px;border-radius:14px;border:1px solid rgba(15,23,42,.16);background:rgba(2,6,23,.03);color:var(--text);" />
+          <button class="btn" type="submit" style="justify-self:start;">שליחה</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> STN Tech Solutions · כל הזכויות שמורות
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const btn = document.getElementById("hamburger");
+    const menu = document.getElementById("mobileMenu");
+
+    btn?.addEventListener("click", () => {
+      const isOpen = menu.style.display === "block";
+      menu.style.display = isOpen ? "none" : "block";
+      btn.setAttribute("aria-expanded", String(!isOpen));
+    });
+
+    menu?.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", () => {
+        if (window.innerWidth <= 760) {
+          menu.style.display = "none";
+          btn.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
